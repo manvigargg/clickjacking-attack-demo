@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NorthPoint Bank — Online Banking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#1a3a5c"/>
+          <path d="M6 20h16M14 8v12M9 12h10" stroke="#c9a84c" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">NorthPoint Bank</span>
+      </div>
+      <nav class="site-nav">
+        <a href="#">Accounts</a>
+        <a href="#">Transfers</a>
+        <a href="#">Payments</a>
+        <a href="#">Support</a>
+      </nav>
+      <div class="header-user">
+        <span class="user-name">John Mitchell</span>
+        <div class="avatar">JM</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <aside class="sidebar">
+      <div class="account-summary">
+        <p class="summary-label">Primary Checking</p>
+        <p class="summary-account">**** 4829</p>
+        <p class="summary-balance">$12,450.00</p>
+        <p class="summary-available">Available balance</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-link">Transaction History</a>
+        <a href="#" class="sidebar-link active">Fund Transfer</a>
+        <a href="#" class="sidebar-link">Pay Bills</a>
+        <a href="#" class="sidebar-link">Statements</a>
+        <a href="#" class="sidebar-link">Settings</a>
+      </nav>
+    </aside>
+
+    <section class="transfer-panel">
+      <div class="panel-header">
+        <h1>Transfer Funds</h1>
+        <p>Move money between accounts or to an external recipient.</p>
+      </div>
+
+      <div class="form-section">
+        <div class="form-row">
+          <label for="from-account">From account</label>
+          <select id="from-account">
+            <option>Primary Checking — **** 4829 ($12,450.00)</option>
+            <option>Savings — **** 2201 ($3,210.50)</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="recipient">Recipient account number</label>
+          <input type="text" id="recipient" value="9988776655" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label for="recipient-name">Recipient name</label>
+          <input type="text" id="recipient-name" value="A. Tacker Holdings LLC" autocomplete="off">
+        </div>
+
+        <div class="form-row half">
+          <div>
+            <label for="amount">Amount (USD)</label>
+            <input type="text" id="amount" value="5,000.00">
+          </div>
+          <div>
+            <label for="transfer-date">Transfer date</label>
+            <input type="date" id="transfer-date">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="memo">Memo (optional)</label>
+          <input type="text" id="memo" placeholder="Add a note">
+        </div>
+
+        <div class="transfer-summary">
+          <div class="summary-row">
+            <span>Transfer amount</span>
+            <span>$5,000.00</span>
+          </div>
+          <div class="summary-row">
+            <span>Processing fee</span>
+            <span>$0.00</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total deducted</span>
+            <span>$5,000.00</span>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-secondary" type="button">Cancel</button>
+          <button class="btn-primary" id="confirm-btn" type="button" onclick="handleTransfer()">
+            Confirm Transfer
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Set today's date
+    document.getElementById('transfer-date').valueAsDate = new Date();
+
+    function handleTransfer() {
+      const btn = document.getElementById('confirm-btn');
+      btn.textContent = 'Processing...';
+      btn.disabled = true;
+
+      setTimeout(function() {
+        const toast = document.getElementById('toast');
+        toast.textContent = 'Transfer of $5,000.00 to A. Tacker Holdings LLC has been submitted.';
+        toast.classList.add('visible');
+        
+        // Deduct balance for realism
+        const balanceEl = document.querySelector('.summary-balance');
+        if (balanceEl) {
+          balanceEl.innerHTML = '<span style="color:#e63946;">$7,450.00</span>';
+        }
+
+        // Log for demo purposes — visible in DevTools
+        console.log('[VICTIM] Transfer triggered. Recipient: 9988776655. Amount: $5,000.00');
+
+        setTimeout(function() {
+          toast.classList.remove('visible');
+          btn.textContent = 'Transfer Complete';
+          btn.style.backgroundColor = '#10b981';
+        }, 4000);
+      }, 900);
+    }
+
+    // ── VULNERABILITY EXPLOIT AID (For demonstration auto-calibration) ──
+    // The victim page broadcasts the exact page coordinates of the
+    // "Confirm Transfer" button to the parent window (the attacker iframe).
+    // In a real attack, the attacker wouldn't have this, but they would
+    // manually measure these coordinates beforehand using DevTools.
+    // This allows the demo to auto-align perfectly on any screen size.
+    window.addEventListener('load', function() {
+      // Small delay to ensure any fonts/layout fully settle
+      setTimeout(function() {
+        var btn = document.getElementById('confirm-btn');
+        if (!btn) return;
+        var rect = btn.getBoundingClientRect();
+        
+        // Use pure viewport coordinates since the attacker uses position: fixed
+        var viewportX = rect.left + rect.width / 2;
+        var viewportY = rect.top + rect.height / 2;
+
+        window.parent.postMessage({
+          type: 'clickjack-coords',
+          centerX: viewportX,
+          centerY: viewportY
+        }, '*');
+      }, 150);
+    });
+  </script>
+</body>
+</html>
