@@ -140,3 +140,8 @@ clickjacking-demo/
   docs/
     attack-diagram.md     # Detailed technical breakdown
 ```
+
+## Visual Overview
+<img width="1919" height="996" alt="Screenshot 2026-04-06 004005" src="https://github.com/user-attachments/assets/55950b5f-c631-43d9-b7aa-97f8328c7750" />
+<img width="1912" height="691" alt="Screenshot 2026-04-06 135431" src="https://github.com/user-attachments/assets/87b22c6a-14f7-49bd-af5f-c706e952bf26" />
+<img width="1919" height="951" alt="Screenshot 2026-04-06 135453" src="https://github.com/user-attachments/assets/92dd3729-cec5-4df7-8994-b85a827c98c2" />
