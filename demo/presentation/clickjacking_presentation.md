@@ -3,7 +3,7 @@
 
 **Course / Module:** Web Security Fundamentals  
 **Topic:** Client-Side Attacks  
-**Presented by:** [Your Name]  
+**Presented by:** Arin Vaidhya Jain & Manvi Garg 
 **Date:** April 2026
 
 ---
